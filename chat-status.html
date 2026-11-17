@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat Status Check</title>
+<style>
+:root{color-scheme:dark;font-family:Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#0b141a;color:#e9edef;display:grid;place-items:center;padding:20px}
+.phone{width:min(100%,390px);min-height:620px;background:#111b21;border:1px solid #31434b;border-radius:24px;overflow:hidden;box-shadow:0 18px 55px #0008;display:flex;flex-direction:column}
+header{background:#202c33;padding:18px;display:flex;align-items:center;gap:12px}
+.avatar{width:42px;height:42px;border-radius:50%;background:#087e69;display:grid;place-items:center;font-weight:bold}
+h1{font-size:17px;margin:0} .sub{font-size:12px;color:#aebac1;margin-top:4px}
+main{padding:22px 18px;flex:1;background:linear-gradient(#0b141a,#101d23)}
+.badge{display:inline-block;border:1px solid #42615d;color:#8de1c3;border-radius:20px;padding:6px 10px;font-size:11px;letter-spacing:.4px}
+h2{font-size:22px;line-height:1.25;margin:22px 0 10px}
+p{color:#c6d1d6;line-height:1.55;font-size:14px}
+.panel{margin-top:22px;background:#202c33;border:1px solid #34464e;border-radius:14px;padding:16px}
+.row{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin:10px 0;color:#d7e0e4}
+.track{height:8px;background:#35464d;border-radius:9px;overflow:hidden;margin-top:15px}
+.fill{height:100%;width:0;background:#25d366;border-radius:9px;transition:width .25s}
+button{width:100%;border:0;border-radius:12px;padding:14px;background:#25d366;color:#062b20;font-size:15px;font-weight:bold;margin-top:22px;cursor:pointer}
+button:focus-visible{outline:3px solid white;outline-offset:3px}
+.result{display:none;text-align:center;padding-top:22px}
+.big{font-size:42px}
+.small{font-size:12px;color:#aebac1}
+footer{padding:12px;text-align:center;font-size:11px;color:#aebac1;background:#202c33}
+</style>
+</head>
+<body>
+<section class="phone" aria-label="Simulasi prank">
+<header><div class="avatar">WA</div><div><h1>WhatsApp System</h1><div class="sub">Simulasi paparan • bukan sistem rasmi</div></div></header>
+<main>
+<div class="badge">DEMO PRANK • SELAMAT</div>
+<section id="start">
+<h2>Pemeriksaan paparan sembang</h2>
+<p>Tekan butang di bawah untuk melihat animasi simulasi. Halaman ini tidak mengakses, mengubah atau memadam sebarang sembang WhatsApp.</p>
+<div class="panel">
+<div class="row"><span>Status simulasi</span><strong id="status">Sedia</strong></div>
+<div class="row"><span>Semakan visual</span><span id="percent">0%</span></div>
+<div class="track"><div class="fill" id="fill"></div></div>
+</div>
+<button id="go" type="button">Mula pemeriksaan</button>
+</section>
+<section class="result" id="result" aria-live="polite">
+<div class="big">😂</div>
+<h2>KENA PRANK!</h2>
+<p>Jangan risau — sembang WhatsApp awak tidak disentuh. Ini cuma laman simulasi yang dibuat untuk bergurau.</p>
+<button id="again" type="button">Main lagi</button>
+</section>
+</main>
+<footer>Halaman hiburan tidak rasmi • Tidak berkaitan dengan WhatsApp</footer>
+</section>
+<script>
+const go=document.getElementById('go'),again=document.getElementById('again');
+const statusText=document.getElementById('status'),percent=document.getElementById('percent');
+const fill=document.getElementById('fill'),start=document.getElementById('start'),result=document.getElementById('result');
+let timer;
+function run(){
+ clearInterval(timer);go.disabled=true;go.textContent='Sedang memeriksa…';
+ let n=0;statusText.textContent='Sedang berjalan';percent.textContent='0%';fill.style.width='0%';
+ timer=setInterval(()=>{
+  n=Math.min(100,n+10);percent.textContent=n+'%';fill.style.width=n+'%';
+  if(n>=100){clearInterval(timer);start.style.display='none';result.style.display='block';}
+ },180);
+}
+function reset(){clearInterval(timer);result.style.display='none';start.style.display='block';go.disabled=false;go.textContent='Mula pemeriksaan';statusText.textContent='Sedia';percent.textContent='0%';fill.style.width='0%';}
+go.addEventListener('click',run);again.addEventListener('click',reset);
+</script>
+</body>
+</html>
